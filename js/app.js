@@ -17,7 +17,9 @@ function push(id) {
             break;
         case "HOME":
             url = "./components/home.html"
-            break;    
+            break;
+        case "HOMEWORK":
+            url = "./components/homework2.html"        
         default:
             break;
     }
@@ -46,5 +48,8 @@ window.onload = event => {
     })
     $("#home").on("click", function() {
         push("HOME")
+    })
+    $("#homeworks").on("click", function() {
+        push("HOMEWORK")
     })
 }

@@ -143,11 +143,21 @@ nav {
 .reference-list a:hover {
     color: var(--clr-accent);
 }
- 
-svg {
+
+
+.svg__shapes {
     border: 3px solid #eee;
     width: 50rem;
     height: 75rem;
+    display: block;
+    margin: 1rem auto;
+    background-color: var(--clr-grey);
+}
+
+.svg__map {
+    border: 3px solid #eee;
+    width: 90rem;
+    height: 55rem;
     display: block;
     margin: 1rem auto;
     background-color: var(--clr-grey);
