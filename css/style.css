@@ -5,8 +5,8 @@
 }
 
 :root {
-    --ff-primary: "Lora", serif;
-    --ff-secondary: "Roboto Slab", serif;
+    --ff-primary: 'Lora', serif;
+    --ff-secondary: 'Roboto Slab', serif;
     --clr-accent: #f8333c;
     --clr-dark: #303030;
     --clr-light: #fff;
@@ -14,8 +14,8 @@
     --fw-reg: 400;
     --fw-bold: 700;
     --fs-body: 2rem;
-    --bs: 0.25em 0.25em 0.75em rgba(0,0,0,.25),
-          0.125em 0.125em 0.25em rgba(0,0,0,.15);
+    --bs: 0.25em 0.25em 0.75em rgba(0, 0, 0, 0.25),
+        0.125em 0.125em 0.25em rgba(0, 0, 0, 0.15);
 }
 
 html {
@@ -56,35 +56,34 @@ nav {
 }
 
 .nav__links a {
-  font-family: var(--ff-primary);
-  font-size: 1.75rem;
-  font-weight: 200;
-  color: var(--clr-dark);
-  text-decoration: none;
+    font-family: var(--ff-primary);
+    font-size: 1.75rem;
+    font-weight: 200;
+    color: var(--clr-dark);
+    text-decoration: none;
 }
 
 .nav__links {
     list-style: none;
     display: flex;
-    font-size: 2rem
-  }
-  
-  .nav__links li {
-    padding: 0px 20px;
-  }
-  
-  .nav__links li:nth-child(1) {
-    padding: 0 20px 0 0;
-  }
-  
-  .nav__links li a {
-    transition: all 0.3s ease 0s;
-  }
-  
-  .nav__links li a:hover {
-    color: var(--clr-accent);
-  }
+    font-size: 2rem;
+}
 
+.nav__links li {
+    padding: 0px 20px;
+}
+
+.nav__links li:nth-child(1) {
+    padding: 0 20px 0 0;
+}
+
+.nav__links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+    color: var(--clr-accent);
+}
 
 .about-me {
     max-width: 100rem;
@@ -99,16 +98,16 @@ nav {
     .about-me {
         display: grid;
         grid-template-columns: 1fr 30rem;
-        grid-template-areas: 
-            "title img"
-            "text img";
+        grid-template-areas:
+            'title img'
+            'text img';
         grid-column-gap: 2rem;
     }
-    
+
     .section__title--about {
         grid-area: title;
     }
-    
+
     .about-me__img {
         grid-area: img;
         position: relative;
@@ -119,13 +118,12 @@ nav {
 .data-viz {
     display: grid;
     grid-template-rows: 75% 20% 5%;
-    grid-template-areas: 
-    "img"
-    "text"
-    ;
+    grid-template-areas:
+        'img'
+        'text';
 }
 
-.data-viz p a:hover{
+.data-viz p a:hover {
     color: var(--clr-accent);
 }
 
@@ -136,14 +134,13 @@ nav {
     justify-content: center;
 }
 
-.data-viz__text-desc{
-    grid-area: text
+.data-viz__text-desc {
+    grid-area: text;
 }
 
 .reference-list a:hover {
     color: var(--clr-accent);
 }
-
 
 .svg__shapes {
     border: 3px solid #eee;
@@ -163,29 +160,59 @@ nav {
     background-color: var(--clr-grey);
 }
 
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    font-size: small;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 20px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: '\25BC';
+    position: absolute;
+    text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
 .rectangle {
     animation: rectangle 3s linear infinite;
-  }
+}
 
-.rectangle-reverse{
+.rectangle-reverse {
     animation: rectangle_reverse 3s linear infinite;
-}  
-  
-  @keyframes rectangle {
+}
+
+@keyframes rectangle {
     from {
-      transform:  translate(250px, 150px) rotate(0deg);
+        transform: translate(250px, 150px) rotate(0deg);
     }
     to {
-      transform:  translate(250px, 150px) rotate(360deg);
+        transform: translate(250px, 150px) rotate(360deg);
     }
 }
 
 @keyframes rectangle_reverse {
     from {
-      transform:  translate(250px, 150px) rotate(360deg);
+        transform: translate(250px, 150px) rotate(360deg);
     }
     to {
-      transform:  translate(250px, 150px) rotate(0deg);
+        transform: translate(250px, 150px) rotate(0deg);
     }
 }
 
@@ -199,32 +226,32 @@ nav {
 
 @keyframes square {
     from {
-        transform:  translate(250px, 500px) rotate(360deg);
-      }
-      to {
-        transform:  translate(250px, 500px) rotate(0deg);
-      }
+        transform: translate(250px, 500px) rotate(360deg);
+    }
+    to {
+        transform: translate(250px, 500px) rotate(0deg);
+    }
 }
 
 @keyframes square_reverse {
     from {
-        transform:  translate(250px, 500px) rotate(0deg);
-      }
-      to {
-        transform:  translate(250px, 500px) rotate(360deg);
-      }
+        transform: translate(250px, 500px) rotate(0deg);
+    }
+    to {
+        transform: translate(250px, 500px) rotate(360deg);
+    }
 }
 
-.circle{
+.circle {
     animation: roll 2s linear infinite;
 }
 
-.circle-reverse{
+.circle-reverse {
     animation: roll-reverse 2s linear infinite;
 }
 
 @keyframes roll {
-    from{
+    from {
         transform: translate(150px, 950px);
     }
     to {
@@ -233,7 +260,7 @@ nav {
 }
 
 @keyframes roll-reverse {
-    from{
+    from {
         transform: translate(550px, 950px);
     }
     to {
