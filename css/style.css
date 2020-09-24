@@ -190,12 +190,27 @@ nav {
     left: 0;
 }
 
+.legend {
+    position: absolute;
+    left: 2rem;
+    top: 20rem;
+}
+
 .rectangle {
     animation: rectangle 3s linear infinite;
 }
 
 .rectangle-reverse {
     animation: rectangle_reverse 3s linear infinite;
+}
+
+#svgs > object {
+    width: 5rem;
+    height: 6rem;
+}
+
+#svgs > object > svg {
+    fill: red;
 }
 
 @keyframes rectangle {
