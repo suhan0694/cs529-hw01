@@ -3,6 +3,54 @@ async function initD3GunMap() {
 
     const statesJSON = await d3.json('../resource/freq2_by_state_updated.json')
 
+    let min = Infinity
+    statesJSON.forEach((data) => {
+        if (
+            d3.min([
+                data.youngMale,
+                data.youngfemale,
+                data.oldMales,
+                data.oldFemales,
+                data.teenMale,
+                data.youngFemale,
+            ]) < min
+        ) {
+            min = d3.min([
+                data.youngMale,
+                data.youngfemale,
+                data.oldMales,
+                data.oldFemales,
+                data.teenMale,
+                data.youngFemale,
+            ])
+        }
+    })
+
+    let max = 0
+    statesJSON.forEach((data) => {
+        if (
+            d3.max([
+                data.youngMale,
+                data.youngfemale,
+                data.oldMales,
+                data.oldFemales,
+                data.teenMale,
+                data.youngFemale,
+            ]) > max
+        ) {
+            max = d3.max([
+                data.youngMale,
+                data.youngfemale,
+                data.oldMales,
+                data.oldFemales,
+                data.teenMale,
+                data.youngFemale,
+            ])
+        }
+    })
+
+    console.log(min, max)
+
     const gunEvents = await d3.csv('../resource/gunEvents.csv')
 
     const gunFreq = await d3.csv('../resource/frequency2.csv')
@@ -13,6 +61,9 @@ async function initD3GunMap() {
 
     const lowColor = '#fee0d2'
     const highColor = '#de2d26'
+
+    const lowColor1 = '#fee6ce'
+    const highColor1 = '#e6550d'
 
     $('#hello').on('click', function () {})
 
@@ -50,61 +101,117 @@ async function initD3GunMap() {
         .domain(d3.extent(deathPerGender))
         .range([5, 100])
 
-    var choloroScale = d3
+    const choloroScale = d3
         .scaleLinear()
         .domain(d3.extent(stateDeaths))
+        .range([lowColor, highColor])
+
+    const ageGroupScale = d3
+        .scaleLinear()
+        .domain([0, 1200])
         .range([lowColor, highColor])
 
     const spike = (length, width = 7) =>
         `M${-width / 2},0L0,${-length}L${width / 2},0`
 
+    //add a legend for Chloropeth map
     // add a legend
-    const w = 140,
-        h = 300
+    const wMap = 140,
+        hMap = 300
 
-    const key = d3
+    const keyMap = d3
         .select('body')
         .append('svg')
-        .attr('width', w)
-        .attr('height', h)
+        .attr('width', wMap)
+        .attr('height', hMap)
         .attr('class', 'legend')
 
-    const legend = key
+    const legendMap = keyMap
         .append('defs')
         .append('svg:linearGradient')
-        .attr('id', 'gradient')
+        .attr('id', 'gradient1')
         .attr('x1', '100%')
         .attr('y1', '0%')
         .attr('x2', '100%')
         .attr('y2', '100%')
         .attr('spreadMethod', 'pad')
 
-    legend
+    legendMap
         .append('stop')
         .attr('offset', '0%')
         .attr('stop-color', highColor)
         .attr('stop-opacity', 1)
 
-    legend
+    legendMap
         .append('stop')
         .attr('offset', '100%')
         .attr('stop-color', lowColor)
         .attr('stop-opacity', 1)
 
-    key.append('rect')
-        .attr('width', w - 100)
-        .attr('height', h)
-        .style('fill', 'url(#gradient)')
+    keyMap
+        .append('rect')
+        .attr('width', wMap - 100)
+        .attr('height', hMap)
+        .style('fill', 'url(#gradient1)')
         .attr('transform', 'translate(0,10)')
 
-    const y = d3.scaleLinear().range([h, 0]).domain([5, 1500])
+    const y = d3.scaleLinear().range([hMap, 0]).domain([5, 1500])
 
     const yAxis = d3.axisRight(y)
 
-    key.append('g')
+    keyMap
+        .append('g')
         .attr('class', 'y axis')
         .attr('transform', 'translate(41,10)')
         .call(yAxis)
+
+    // add a legend for SVG Icons
+    const wSVG = 300,
+        hSVG = 70
+
+    const keySVG = d3
+        .select('#svg-icon-legend')
+        .attr('width', wSVG)
+        .attr('height', hSVG)
+
+    const legendSVG = keySVG
+        .append('defs')
+        .append('svg:linearGradient')
+        .attr('id', 'gradient2')
+        .attr('x1', '100%')
+        .attr('y1', '100%')
+        .attr('x2', '0%')
+        .attr('y2', '100%')
+        .attr('spreadMethod', 'pad')
+
+    legendSVG
+        .append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', highColor1)
+        .attr('stop-opacity', 1)
+
+    legendSVG
+        .append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', lowColor1)
+        .attr('stop-opacity', 1)
+
+    keySVG
+        .append('rect')
+        .attr('width', wSVG)
+        .attr('height', hSVG - 30)
+        .style('fill', 'url(#gradient2)')
+        .attr('transform', 'translate(0,10)')
+
+    const x = d3.scaleLinear().range([0, wSVG]).domain([0, 1200])
+
+    const xAxis = d3.axisBottom(x)
+
+    keySVG
+        .append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,50)')
+        .call(xAxis)
 
     const spikeTip = d3
         .tip()
@@ -280,29 +387,36 @@ async function initD3GunMap() {
         })
 
     var colorSvg = (data) => {
+        console.log(data)
+        console.log(statesJSON)
+
+        const stateObj = statesJSON.filter(
+            (state) => state.NAME === data.properties.name
+        )
+        const oldMaleStat = stateObj[0].oldMales
+        const oldFemaleStat = stateObj[0].oldFemales
+        const youngStat = stateObj[0].youngMale + stateObj[0].youngFemale
+        const teenStat = stateObj[0].teenMale + stateObj[0].teenFemale
+
         const man = document.getElementById('man')
         const female = document.getElementById('female')
-        const oldMan = document.getElementById('oldMan')
-        const oldFemale = document.getElementById('oldFemale')
+        const young = document.getElementById('young')
         const teens = document.getElementById('teens')
         // Get the SVG document inside the Object tag
         const svgDocMan = man.contentDocument
         const svgDocFemale = female.contentDocument
-        const svgDocOldMan = oldMan.contentDocument
-        const svgDocOldFemale = oldFemale.contentDocument
+        const svgDocYoung = young.contentDocument
         const svgDocTeens = teens.contentDocument
         // Get one of the SVG items by ID;
         const svgItemMan = svgDocMan.getElementById('man_svg')
         const svgItemFemale = svgDocFemale.getElementById('female_svg')
-        const svgItemOldMan = svgDocOldMan.getElementById('oldMale_svg')
-        const svgItemOldFemale = svgDocOldFemale.getElementById('oldFemale_svg')
+        const svgItemYoung = svgDocYoung.getElementById('young_svg')
         const svgItemTeens = svgDocTeens.getElementById('teen_svg')
         // Set the colour to something else
-        svgItemMan.setAttribute('fill', 'lime')
-        svgItemFemale.setAttribute('fill', 'lime')
-        svgItemOldMan.setAttribute('fill', 'lime')
-        svgItemOldFemale.setAttribute('fill', 'lime')
-        svgItemTeens.setAttribute('fill', 'lime')
+        svgItemMan.setAttribute('fill', ageGroupScale(oldMaleStat))
+        svgItemFemale.setAttribute('fill', ageGroupScale(oldFemaleStat))
+        svgItemYoung.setAttribute('fill', ageGroupScale(youngStat))
+        svgItemTeens.setAttribute('fill', ageGroupScale(teenStat))
     }
 
     svg.call(zoom)
