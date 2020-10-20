@@ -1,55 +1,60 @@
-
-
 function push(id) {
     // Update Title in Window's Tab
-    document.title = id;
+    document.title = id
     // Finally push state change to the address bar
-    let url = null;
+    let url = null
     switch (id) {
-        case  "DATA":
-            url = "./components/data.html"
-            break;
-        case "SVG" :
-            url = "./components/svg.html"
-            break;
-        case "REFERENCE":
-            url = "./components/reference.html"
-            break;
-        case "HOME":
-            url = "./components/home.html"
-            break;
-        case "HOMEWORK":
-            url = "./components/homework2.html"        
+        case 'DATA':
+            url = './components/data.html'
+            break
+        case 'SVG':
+            url = './components/svg.html'
+            break
+        case 'REFERENCE':
+            url = './components/reference.html'
+            break
+        case 'HOME':
+            url = './components/home.html'
+            break
+        case 'HOMEWORK2':
+            url = './components/homework2.html'
+            break
+        case 'HOMEWORK3':
+            url = './components/homework3.html'
+            break
         default:
-            break;
+            break
     }
-    fetch(url).then((response) => response.text()).then(
-        (html) => {
-            $("#content").html(html)
-        }
-    )
+    fetch(url)
+        .then((response) => response.text())
+        .then((html) => {
+            $('#content').html(html)
+        })
 }
-window.onload = event => {
+window.onload = (event) => {
     // Add history push() event when boxes are clicked
-    fetch("./components/home.html").then((response) => response.text()).then(
-        (html) => {
-            $("#content").html(html)
-        }
-    )
+    fetch('./components/home.html')
+        .then((response) => response.text())
+        .then((html) => {
+            $('#content').html(html)
+        })
 
-    $("#data").on("click", function () {
-        push("DATA")
+    $('#data').on('click', function () {
+        push('DATA')
     })
-    $("#svg").on("click", function() {
-        push("SVG")
+    $('#svg').on('click', function () {
+        push('SVG')
     })
-    $("#reference").on("click", function() {
-        push("REFERENCE")
+    $('#reference').on('click', function () {
+        push('REFERENCE')
     })
-    $("#home").on("click", function() {
-        push("HOME")
+    $('#home').on('click', function () {
+        push('HOME')
     })
-    $("#homeworks").on("click", function() {
-        push("HOMEWORK")
+    $('#homework2').on('click', function () {
+        push('HOMEWORK2')
+    })
+    $('#homework3').on('click', function () {
+        push('HOMEWORK3')
     })
 }

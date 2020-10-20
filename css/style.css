@@ -237,6 +237,18 @@ label > span {
     margin: 2rem;
 }
 
+.sliderDiv {
+    margin: 10px;
+}
+
+.sliderDiv > input {
+    width: 50%;
+}
+
+.legendDiv {
+    margin: 30px;
+}
+
 @keyframes rectangle {
     from {
         transform: translate(250px, 150px) rotate(0deg);
